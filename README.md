@@ -1,22 +1,72 @@
-# Playback Rate Unlocker
+# Enhanced Video & Audio Speed Control
 
-Chrome extension that bypasses playback speed limits on e-learning platforms (EasyLlama, Go1, etc.).
+A Chrome extension that provides advanced playback speed control for online videos and audio. Perfect for power users who want to watch and listen to content at their own pace.
+
+## Features
+
+- **Wide Speed Range:** Control playback from 0.1x up to 16x speed
+- **Fine-Grained Control:** Adjust speed by 0.1x or 0.5x increments with buttons
+- **Direct Input:** Type in any speed value for precise control
+- **Mouse Wheel Support:** Scroll in the popup to adjust speed quickly
+- **Works Everywhere:** YouTube, Vimeo, Loom, training platforms, and more
+- **Persistent Settings:** Your speed preference saves across page loads
+
+## Why This Extension?
+
+Many video players limit maximum playback speed to 2x. This is fine for most users, but if you're a fast learner, need to review content quickly, or have accessibility needs that benefit from faster playback, these artificial limits are frustrating.
+
+This extension removes those limitations, giving you full control over your viewing experience.
 
 ## Installation
+
+### From Source (Developer Mode)
 
 1. Open `chrome://extensions`
 2. Enable **Developer mode**
 3. Click **Load unpacked**
 4. Select this folder
 
+### From Chrome Web Store
+
+Coming soon!
+
 ## Usage
 
-1. Navigate to your e-learning course
-2. Click the extension icon
-3. Select your desired speed (1x, 1.5x, 2x, 2.5x, 3x, or 4x)
+1. Navigate to any video or audio page (YouTube, Vimeo, training site, etc.)
+2. Click the extension icon in your toolbar
+3. Adjust your playback speed using any method:
+   - **Type directly:** Enter any value from 0.1 to 16
+   - **Fine tune:** Click `<` or `>` to adjust by 0.1x
+   - **Quick adjust:** Click `<<` or `>>` to adjust by 0.5x
+   - **Mouse wheel:** Scroll up/down in the popup to adjust by 0.1x
+4. The media will immediately play at your selected speed
+5. Your preference persists across page reloads
 
-The speed persists across page loads.
+## Use Cases
 
-## How It Works
+- **Fast Learners:** Consume educational content more efficiently
+- **Review Sessions:** Quickly review material you're already familiar with
+- **Time Savers:** Get through mandatory training videos faster
+- **Accessibility:** Some users process audio information better at higher speeds
+- **Content Creators:** Review your own content quickly during editing
 
-The extension spoofs the `playbackRate` getter so platform checks always see ≤2x, while the actual playback runs at your selected speed. See [CLAUDE.md](CLAUDE.md) for technical details.
+## Technical Details
+
+For developers interested in how this works, see [CLAUDE.md](CLAUDE.md) for implementation details.
+
+## Privacy
+
+This extension:
+- ✓ Stores your speed preference locally
+- ✓ Only affects video playback on pages you visit
+- ✗ Does NOT collect or transmit any data
+- ✗ Does NOT track your browsing
+- ✗ Does NOT access personal information
+
+## Support
+
+If you encounter any issues or have suggestions, please open an issue on GitHub.
+
+## License
+
+MIT License - Feel free to use, modify, and distribute.
