@@ -13,25 +13,26 @@ echo -e "${BLUE}Building PlayFaster for Chrome Web Store...${NC}"
 
 # Clean previous build
 echo "Cleaning previous builds..."
-rm -f enhanced-video-audio-speed.zip
+rm -f playfaster.zip
 
 # Create zip excluding development files
 echo "Creating zip archive..."
-zip -r -q enhanced-video-audio-speed.zip . \
+zip -r -q playfaster.zip . \
   -x ".*" \
   -x "__MACOSX/*" \
   -x "*.DS_Store" \
   -x "*.zip" \
   -x ".git/*" \
   -x "*.md" \
-  -x "*.sh"
+  -x "*.sh" \
+  -x "docs/*"
 
 # Get zip size
-SIZE=$(du -h enhanced-video-audio-speed.zip | cut -f1)
+SIZE=$(du -h playfaster.zip | cut -f1)
 
 echo -e "${GREEN}✓ Build complete!${NC}"
 echo ""
-echo "Package: enhanced-video-audio-speed.zip"
+echo "Package: playfaster.zip"
 echo "Size: $SIZE"
 echo ""
 echo "Ready to upload to Chrome Web Store Developer Dashboard:"

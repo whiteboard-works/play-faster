@@ -43,14 +43,15 @@ The extension zip must include:
 ### Manual Build
 ```bash
 # Create zip excluding development files
-zip -r enhanced-video-audio-speed.zip . \
+zip -r playfaster.zip . \
   -x ".*" \
   -x "__MACOSX/*" \
   -x "*.DS_Store" \
   -x "*.zip" \
   -x ".git/*" \
   -x "*.md" \
-  -x "*.sh"
+  -x "*.sh" \
+  -x "docs/*"
 ```
 
 The build script (`build.sh`) automates this process. It's already executable in the repository.
@@ -67,7 +68,7 @@ The build script (`build.sh`) automates this process. It's already executable in
 ### 2. Prepare Store Listing
 
 #### Required Assets
-- [ ] Extension package (enhanced-video-audio-speed.zip)
+- [ ] Extension package (playfaster.zip)
 - [ ] Store icon: 128x128 PNG (use `icon-128.png`)
 - [ ] Small promo tile: 440x280 PNG
 - [ ] Marquee promo tile: 1400x560 PNG (optional)
@@ -119,7 +120,7 @@ Take control of your learning pace. Never be limited by arbitrary speed restrict
 ### 3. Submit for Review
 1. Go to [Chrome Web Store Developer Dashboard](https://chrome.google.com/webstore/devconsole)
 2. Click "New Item"
-3. Upload `playback-rate-unlocker.zip`
+3. Upload `playfaster.zip`
 4. Fill in store listing details
 5. Pay $5 one-time developer registration fee (if first submission)
 6. Submit for review
@@ -138,7 +139,7 @@ When updating the extension:
 
 1. Update version in `manifest.json`:
    ```json
-   "version": "1.1"
+   "version": "1.0.2"
    ```
 
 2. Rebuild the package:
