@@ -1,7 +1,7 @@
-# Enhanced Video & Audio Speed Control
+# PlayFaster
 
 <p align="center">
-  <img src="icon-128.png" alt="Enhanced Video & Audio Speed Control" width="128" height="128">
+  <img src="icon-128.png" alt="PlayFaster" width="128" height="128">
 </p>
 
 A Chrome extension that provides advanced playback speed control for online videos and audio. Perfect for power users who want to watch and listen to content at their own pace.

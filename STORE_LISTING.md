@@ -4,7 +4,7 @@
 
 **Extension Name:**
 ```
-Enhanced Video & Audio Speed Control
+PlayFaster
 ```
 
 **Short Description (132 characters max):**
@@ -25,7 +25,7 @@ English (United States)
 ## Detailed Description
 
 ```
-Enhanced Video & Audio Speed Control gives you complete control over media playback speed across all websites.
+PlayFaster gives you complete control over media playback speed across all websites.
 
 FEATURES:
 • Wide speed range: 0.1x to 16x playback
@@ -258,11 +258,11 @@ A: No. The extension only stores the user's speed preference locally using Chrom
 
 **For blog posts or promotional materials:**
 
-### Why You Need Enhanced Video & Audio Speed Control
+### Why You Need PlayFaster
 
 Tired of being locked to 2x speed on your training videos? Want to breeze through that 40-minute tutorial in 10 minutes? Or maybe you need to slow things down to 0.5x to catch every detail?
 
-Enhanced Video & Audio Speed Control puts you in the driver's seat. With speeds ranging from 0.1x to 16x, you can watch content at exactly the pace that works for you.
+PlayFaster puts you in the driver's seat. With speeds ranging from 0.1x to 16x, you can watch content at exactly the pace that works for you.
 
 **Features that matter:**
 - 🎯 Precise control: adjust by 0.1x increments
@@ -278,7 +278,7 @@ Enhanced Video & Audio Speed Control puts you in the driver's seat. With speeds 
 - Podcast listeners who think at 3x speed
 - Anyone who values their time
 
-Stop letting video players control your learning pace. Take control with Enhanced Video & Audio Speed Control.
+Stop letting video players control your learning pace. Take control with PlayFaster.
 
 ---
 

@@ -2,7 +2,7 @@
 
 ## Extension Name
 
-**Enhanced Video & Audio Speed Control** - A general-purpose media playback speed controller.
+**PlayFaster** - A general-purpose media playback speed controller.
 
 ## Positioning
 
@@ -88,7 +88,7 @@ Fine-tune video & audio playback speed from 0.1x to 16x. Perfect for power users
 
 **Detailed description (400+ characters recommended):**
 ```
-Enhanced Video & Audio Speed Control gives you complete control over media playback speed across all websites.
+PlayFaster gives you complete control over media playback speed across all websites.
 
 FEATURES:
 • Wide speed range: 0.1x to 16x playback

@@ -1,10 +1,10 @@
-# Privacy Policy for Enhanced Video & Audio Speed Control
+# Privacy Policy for PlayFaster
 
 **Last Updated:** February 7, 2026
 
 ## Overview
 
-Enhanced Video & Audio Speed Control ("the Extension") is committed to protecting your privacy. This privacy policy explains what data we collect (spoiler: none) and how the Extension operates.
+PlayFaster ("the Extension") is committed to protecting your privacy. This privacy policy explains what data we collect (spoiler: none) and how the Extension operates.
 
 ## Data Collection
 

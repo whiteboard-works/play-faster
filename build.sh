@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Enhanced Video & Audio Speed Control - Chrome Web Store Build Script
+# PlayFaster - Chrome Web Store Build Script
 
 set -e  # Exit on error
 
@@ -9,7 +9,7 @@ GREEN='\033[0;32m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-echo -e "${BLUE}Building Enhanced Video & Audio Speed Control for Chrome Web Store...${NC}"
+echo -e "${BLUE}Building PlayFaster for Chrome Web Store...${NC}"
 
 # Clean previous build
 echo "Cleaning previous builds..."
