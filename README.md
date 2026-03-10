@@ -76,3 +76,7 @@ If you encounter any issues or have suggestions, please open an issue on GitHub.
 ## License
 
 MIT License - Feel free to use, modify, and distribute.
+
+---
+
+A [Whiteboard Works](https://whiteboardworks.com) project.
