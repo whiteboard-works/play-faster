@@ -1,4 +1,4 @@
-# Playback Rate Unlocker
+# Play Faster
 
 A Chrome extension that bypasses playback rate limits on e-learning platforms, specifically targeting EasyLlama courses hosted on Go1.
 

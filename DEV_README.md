@@ -165,7 +165,7 @@ A complete privacy policy has been created in `PRIVACY.md`.
 
 **To use it in the Chrome Web Store:**
 1. Push `PRIVACY.md` to your GitHub repository
-2. Get the raw GitHub URL (e.g., `https://github.com/yourusername/faster-training/blob/master/PRIVACY.md`)
+2. Get the raw GitHub URL (e.g., `https://github.com/yourusername/play-faster/blob/master/PRIVACY.md`)
 3. Paste this URL in the "Privacy Policy" field during Chrome Web Store submission
 
 **Summary:** The extension collects NO data. It only stores your playback speed preference locally on your device.
