@@ -10,8 +10,13 @@
     "prepare": "husky"
   },
   "lint-staged": {
-    "*.js": ["eslint --fix", "prettier --write"],
-    "*.{html,json,md}": ["prettier --write"]
+    "*.js": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{html,json,md}": [
+      "prettier --write"
+    ]
   },
   "devDependencies": {
     "@eslint/js": "^9.0.0",
