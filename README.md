@@ -4,17 +4,20 @@
   <img src="icon-128.png" alt="PlayFaster" width="128" height="128">
 </p>
 
-**Break free from the 2× limit.** PlayFaster is a Chrome extension that lets you set _any_ playback speed from 0.1× to 64× on YouTube, Vimeo, Loom, corporate training portals, and more.
+**Break free from the 2× limit.** PlayFaster is a browser extension (Chrome, Firefox) that lets you set _any_ playback speed from 0.1× to 64× on YouTube, Vimeo, Loom, corporate training portals, and more.
 
 > 🔗 **Install from the Chrome Web Store:** [chromewebstore.google.com/detail/playfaster/fppcbkhpahkbgijkdcpjgjmhpfbmfiih](https://chromewebstore.google.com/detail/playfaster/fppcbkhpahkbgijkdcpjgjmhpfbmfiih) \
 > 🌐 **Landing page & screenshots:** [https://playfaster.app](https://playfaster.app)
 
 ## Features
 
-- **Wide Speed Range:** Control playback from 0.1x up to 64x speed
-- **Fine-Grained Control:** Adjust speed by 0.1x or 0.5x increments with buttons
+- **Wide Speed Range:** Control playback from 0.1x up to 64x speed (configurable min/max)
+- **Fine-Grained Control:** Adjust speed by 0.1x or 0.5x increments with buttons (configurable)
 - **Direct Input:** Type in any speed value for precise control
-- **Mouse Wheel Support:** Scroll in the popup to adjust speed quickly
+- **Mouse Wheel Support:** Scroll in the popup to adjust speed; Shift+scroll for larger steps
+- **Keyboard Shortcut:** Press Ctrl+Shift+S (configurable) to activate overlay mode—adjust speed with arrow keys, scroll, or type a number—without opening the popup
+- **Settings Panel:** Gear icon in the popup lets you customize shortcut, step sizes, and min/max speed
+- **Badge:** Extension icon shows current speed when not 1x
 - **Works Everywhere:** YouTube, Vimeo, Loom, training platforms, and more
 - **Persistent Settings:** Your speed preference saves across page loads
 
@@ -35,22 +38,23 @@ This extension removes those limitations, giving you full control over your view
 ### Manual install (developer mode)
 
 1. Clone or download this repository
-2. Open `chrome://extensions`
-3. Enable **Developer mode** (top-right toggle)
-4. Click **Load unpacked** and select the project folder
-5. The extension will appear in your toolbar immediately
+2. **Chrome:** Open `chrome://extensions` → Enable **Developer mode** → **Load unpacked** → select the project folder
+3. **Firefox:** Open `about:debugging` → **This Firefox** → **Load Temporary Add-on** → select `manifest.json` in the project folder
+4. The extension will appear in your toolbar immediately
 
 ## Usage
 
 1. Navigate to any video or audio page (YouTube, Vimeo, training site, etc.)
-2. Click the extension icon in your toolbar
+2. **Popup:** Click the extension icon to open the speed controls
 3. Adjust your playback speed using any method:
    - **Type directly:** Enter any value from 0.1 to 64
-   - **Fine tune:** Click `<` or `>` to adjust by 0.1x
-   - **Quick adjust:** Click `<<` or `>>` to adjust by 0.5x
-   - **Mouse wheel:** Scroll up/down in the popup to adjust by 0.1x
-4. The media will immediately play at your selected speed
-5. Your preference persists across page reloads
+   - **Fine tune:** Click `<` or `>` to adjust by 0.1x (or your configured small step)
+   - **Quick adjust:** Click `<<` or `>>` to adjust by 0.5x (or your configured large step)
+   - **Mouse wheel:** Scroll up/down in the popup; hold Shift for larger steps
+   - **Arrow keys:** Use ↑/↓ while the popup is open
+4. **Keyboard shortcut (overlay mode):** Press Ctrl+Shift+S on any page with video to show a floating overlay. Type a number and press Enter, use arrow keys, or scroll to adjust—no popup needed. Press Esc to close.
+5. The media will immediately play at your selected speed
+6. Your preference persists across page reloads
 
 ## Use Cases
 
@@ -62,13 +66,13 @@ This extension removes those limitations, giving you full control over your view
 
 ## Technical Details
 
-For developers interested in how this works, see [CLAUDE.md](CLAUDE.md) for implementation details.
+For developers interested in how this works, see [CLAUDE.md](CLAUDE.md) for implementation details. Contributors: run `npm run lint` and `npm run format` before submitting changes.
 
 ## Privacy
 
 This extension:
 
-- ✓ Stores your speed preference locally
+- ✓ Stores your speed preference and settings locally
 - ✓ Only affects video playback on pages you visit
 - ✗ Does NOT collect or transmit any data
 - ✗ Does NOT track your browsing
