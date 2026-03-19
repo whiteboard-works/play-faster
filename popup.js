@@ -1,7 +1,7 @@
 // ---- Settings defaults (declared first so all handlers below can reference kbSettings safely) ----
 
 const DEFAULT_KB_SETTINGS = {
-  shortcut: { ctrl: true, shift: true, alt: false, key: 's' },
+  shortcut: { ctrl: true, shift: true, alt: false, key: "s" },
   smallStep: 0.1,
   largeStep: 0.5,
   minSpeed: 0.5,
@@ -13,7 +13,7 @@ let kbSettings = mergeSettings({})
 
 // ---- Speed controls ----
 
-const input = document.getElementById('speed')
+const input = document.getElementById("speed")
 
 function clamp(val, min, max) {
   return Math.max(min, Math.min(max, val))
@@ -24,52 +24,46 @@ function round(val) {
 }
 
 function setRate(newRate) {
-  const clampedRate = clamp(
-    round(newRate),
-    kbSettings.minSpeed,
-    kbSettings.maxSpeed,
-  )
+  const clampedRate = clamp(round(newRate), kbSettings.minSpeed, kbSettings.maxSpeed)
   input.value = clampedRate
   chrome.storage.local.set({ playbackRate: newRate })
   // Fix #2: notify background to update badge even if service worker was dormant
-  chrome.runtime
-    .sendMessage({ type: 'rateChanged', rate: newRate })
-    .catch(() => {})
+  chrome.runtime.sendMessage({ type: "rateChanged", rate: newRate }).catch(() => {})
 }
 
 // Single storage read for faster popup load (was 2 separate async calls)
-chrome.storage.local.get(['playbackRate', 'kbSettings'], (data) => {
+chrome.storage.local.get(["playbackRate", "kbSettings"], (data) => {
   input.value = data.playbackRate || 2
   kbSettings = mergeSettings(data.kbSettings || {})
   populateSettings(kbSettings)
 })
 
 document
-  .getElementById('btnLargeDown')
-  .addEventListener('click', () =>
-    setRate((Number.parseFloat(input.value) || 2) - kbSettings.largeStep),
+  .getElementById("btnLargeDown")
+  .addEventListener("click", () =>
+    setRate((Number.parseFloat(input.value) || 2) - kbSettings.largeStep)
   )
 document
-  .getElementById('btnSmallDown')
-  .addEventListener('click', () =>
-    setRate((Number.parseFloat(input.value) || 2) - kbSettings.smallStep),
+  .getElementById("btnSmallDown")
+  .addEventListener("click", () =>
+    setRate((Number.parseFloat(input.value) || 2) - kbSettings.smallStep)
   )
 document
-  .getElementById('btnSmallUp')
-  .addEventListener('click', () =>
-    setRate((Number.parseFloat(input.value) || 2) + kbSettings.smallStep),
+  .getElementById("btnSmallUp")
+  .addEventListener("click", () =>
+    setRate((Number.parseFloat(input.value) || 2) + kbSettings.smallStep)
   )
 document
-  .getElementById('btnLargeUp')
-  .addEventListener('click', () =>
-    setRate((Number.parseFloat(input.value) || 2) + kbSettings.largeStep),
+  .getElementById("btnLargeUp")
+  .addEventListener("click", () =>
+    setRate((Number.parseFloat(input.value) || 2) + kbSettings.largeStep)
   )
 
-input.addEventListener('change', () => {
+input.addEventListener("change", () => {
   setRate(Number.parseFloat(input.value) || 2)
 })
 
-input.addEventListener('wheel', (e) => {
+input.addEventListener("wheel", (e) => {
   e.preventDefault()
   const delta = e.deltaY < 0 ? kbSettings.smallStep : -kbSettings.smallStep
   setRate((Number.parseFloat(input.value) || 2) + delta)
@@ -77,34 +71,34 @@ input.addEventListener('wheel', (e) => {
 
 // ---- Settings Panel ----
 
-const gearBtn = document.getElementById('gearBtn')
-const settingsPanel = document.getElementById('settingsPanel')
-const shortcutInput = document.getElementById('shortcutInput')
-const smallStepInput = document.getElementById('smallStep')
-const largeStepInput = document.getElementById('largeStep')
+const gearBtn = document.getElementById("gearBtn")
+const settingsPanel = document.getElementById("settingsPanel")
+const shortcutInput = document.getElementById("shortcutInput")
+const smallStepInput = document.getElementById("smallStep")
+const largeStepInput = document.getElementById("largeStep")
 let recordingShortcut = false
 
 // Fix #8: handle special keys in shortcut display
 const KEY_LABELS = {
-  '.': 'Period',
-  ' ': 'Space',
-  ArrowUp: 'Up',
-  ArrowDown: 'Down',
-  ArrowLeft: 'Left',
-  ArrowRight: 'Right',
-  Escape: 'Esc',
-  Enter: 'Enter',
-  Backspace: 'Backspace',
-  Tab: 'Tab',
+  ".": "Period",
+  " ": "Space",
+  ArrowUp: "Up",
+  ArrowDown: "Down",
+  ArrowLeft: "Left",
+  ArrowRight: "Right",
+  Escape: "Esc",
+  Enter: "Enter",
+  Backspace: "Backspace",
+  Tab: "Tab",
 }
 
 function formatShortcut(sc) {
   const parts = []
-  if (sc.ctrl) parts.push('Ctrl')
-  if (sc.shift) parts.push('Shift')
-  if (sc.alt) parts.push('Alt')
+  if (sc.ctrl) parts.push("Ctrl")
+  if (sc.shift) parts.push("Shift")
+  if (sc.alt) parts.push("Alt")
   parts.push(KEY_LABELS[sc.key] || sc.key.toUpperCase())
-  return parts.join('+')
+  return parts.join("+")
 }
 
 function mergeSettings(saved) {
@@ -115,8 +109,8 @@ function populateSettings(s) {
   shortcutInput.value = formatShortcut(s.shortcut)
   smallStepInput.value = s.smallStep
   largeStepInput.value = s.largeStep
-  document.getElementById('minSpeed').value = s.minSpeed
-  document.getElementById('maxSpeed').value = s.maxSpeed
+  document.getElementById("minSpeed").value = s.minSpeed
+  document.getElementById("maxSpeed").value = s.maxSpeed
 }
 
 function saveSettings() {
@@ -124,33 +118,33 @@ function saveSettings() {
 }
 
 // Toggle settings panel
-gearBtn.addEventListener('click', () => {
-  const open = settingsPanel.style.display === 'block'
-  settingsPanel.style.display = open ? 'none' : 'block'
-  gearBtn.classList.toggle('open', !open)
+gearBtn.addEventListener("click", () => {
+  const open = settingsPanel.style.display === "block"
+  settingsPanel.style.display = open ? "none" : "block"
+  gearBtn.classList.toggle("open", !open)
 })
 
 // Shortcut recorder
-shortcutInput.addEventListener('click', () => {
+shortcutInput.addEventListener("click", () => {
   recordingShortcut = true
-  shortcutInput.value = 'Press shortcut…'
-  shortcutInput.classList.add('recording')
+  shortcutInput.value = "Press shortcut…"
+  shortcutInput.classList.add("recording")
 })
 
-shortcutInput.addEventListener('blur', () => {
+shortcutInput.addEventListener("blur", () => {
   if (recordingShortcut) {
     recordingShortcut = false
-    shortcutInput.classList.remove('recording')
+    shortcutInput.classList.remove("recording")
     shortcutInput.value = formatShortcut(kbSettings.shortcut)
   }
 })
 
-shortcutInput.addEventListener('keydown', (e) => {
+shortcutInput.addEventListener("keydown", (e) => {
   if (!recordingShortcut) return
   e.preventDefault()
   e.stopPropagation()
 
-  if (['Control', 'Shift', 'Alt', 'Meta'].includes(e.key)) return
+  if (["Control", "Shift", "Alt", "Meta"].includes(e.key)) return
 
   kbSettings.shortcut = {
     ctrl: e.ctrlKey || e.metaKey,
@@ -160,14 +154,14 @@ shortcutInput.addEventListener('keydown', (e) => {
   }
 
   recordingShortcut = false
-  shortcutInput.classList.remove('recording')
+  shortcutInput.classList.remove("recording")
   shortcutInput.value = formatShortcut(kbSettings.shortcut)
   shortcutInput.blur()
   saveSettings()
 })
 
 // Step inputs
-smallStepInput.addEventListener('change', () => {
+smallStepInput.addEventListener("change", () => {
   const v = Number.parseFloat(smallStepInput.value)
   if (!Number.isNaN(v) && v > 0 && v <= 2) {
     kbSettings.smallStep = round(v)
@@ -175,7 +169,7 @@ smallStepInput.addEventListener('change', () => {
   }
 })
 
-largeStepInput.addEventListener('change', () => {
+largeStepInput.addEventListener("change", () => {
   const v = Number.parseFloat(largeStepInput.value)
   if (!Number.isNaN(v) && v > 0 && v <= 4) {
     kbSettings.largeStep = round(v)
@@ -183,7 +177,7 @@ largeStepInput.addEventListener('change', () => {
   }
 })
 
-document.getElementById('minSpeed').addEventListener('change', (e) => {
+document.getElementById("minSpeed").addEventListener("change", (e) => {
   const v = Number.parseFloat(e.target.value)
   if (!Number.isNaN(v) && v >= 0.1 && v < kbSettings.maxSpeed) {
     kbSettings.minSpeed = round(v)
@@ -191,7 +185,7 @@ document.getElementById('minSpeed').addEventListener('change', (e) => {
   }
 })
 
-document.getElementById('maxSpeed').addEventListener('change', (e) => {
+document.getElementById("maxSpeed").addEventListener("change", (e) => {
   const v = Number.parseFloat(e.target.value)
   if (!Number.isNaN(v) && v <= 64 && v > kbSettings.minSpeed) {
     kbSettings.maxSpeed = round(v)
@@ -200,14 +194,14 @@ document.getElementById('maxSpeed').addEventListener('change', (e) => {
 })
 
 // Arrow keys work while popup is open
-document.addEventListener('keydown', (e) => {
+document.addEventListener("keydown", (e) => {
   const tag = document.activeElement?.tagName
-  if (tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA') return
+  if (tag === "INPUT" || tag === "SELECT" || tag === "TEXTAREA") return
 
-  if (e.key === 'ArrowUp') {
+  if (e.key === "ArrowUp") {
     e.preventDefault()
     setRate((Number.parseFloat(input.value) || 2) + kbSettings.smallStep)
-  } else if (e.key === 'ArrowDown') {
+  } else if (e.key === "ArrowDown") {
     e.preventDefault()
     setRate((Number.parseFloat(input.value) || 2) - kbSettings.smallStep)
   }
@@ -215,26 +209,26 @@ document.addEventListener('keydown', (e) => {
 
 // Fix #7: use e.target.closest() instead of activeElement to reliably detect input elements during wheel
 document.addEventListener(
-  'wheel',
+  "wheel",
   (e) => {
-    if (e.target.closest('input, select, textarea')) return
+    if (e.target.closest("input, select, textarea")) return
     e.preventDefault()
     const raw = e.shiftKey ? -e.deltaX : e.deltaY
     const step = e.shiftKey ? kbSettings.largeStep : kbSettings.smallStep
     setRate((Number.parseFloat(input.value) || 2) + (raw < 0 ? step : -step))
   },
-  { passive: false },
+  { passive: false }
 )
 
 // Arrow keys work while popup is open
-document.addEventListener('keydown', (e) => {
+document.addEventListener("keydown", (e) => {
   const tag = document.activeElement?.tagName
-  if (tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA') return
+  if (tag === "INPUT" || tag === "SELECT" || tag === "TEXTAREA") return
 
-  if (e.key === 'ArrowUp') {
+  if (e.key === "ArrowUp") {
     e.preventDefault()
     setRate((Number.parseFloat(input.value) || 2) + kbSettings.smallStep)
-  } else if (e.key === 'ArrowDown') {
+  } else if (e.key === "ArrowDown") {
     e.preventDefault()
     setRate((Number.parseFloat(input.value) || 2) - kbSettings.smallStep)
   }
@@ -242,13 +236,13 @@ document.addEventListener('keydown', (e) => {
 
 // Fix #7: use e.target.closest() instead of activeElement to reliably detect input elements during wheel
 document.addEventListener(
-  'wheel',
+  "wheel",
   (e) => {
-    if (e.target.closest('input, select, textarea')) return
+    if (e.target.closest("input, select, textarea")) return
     e.preventDefault()
     const raw = e.shiftKey ? -e.deltaX : e.deltaY
     const step = e.shiftKey ? kbSettings.largeStep : kbSettings.smallStep
     setRate((Number.parseFloat(input.value) || 2) + (raw < 0 ? step : -step))
   },
-  { passive: false },
+  { passive: false }
 )
