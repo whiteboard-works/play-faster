@@ -99,6 +99,8 @@ npm run format:check  # check formatting
 
 Config: `eslint.config.mjs`, `.prettierrc`. `.cursor/rules/code-style.mdc` enforces these conventions for AI edits.
 
+GitHub Actions (`.github/workflows/lint.yml`) runs lint and format checks on push and pull requests to `master`. PRs must pass before merge.
+
 ## Installation
 
 1. Open `chrome://extensions`
