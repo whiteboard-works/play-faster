@@ -13,6 +13,7 @@ This is a productivity tool for controlling video and audio playback speed acros
 The extension zip must include:
 
 ### Required Files
+
 - `manifest.json` - Extension configuration
 - `background.js` - Service worker
 - `content.js` - Content script for storage handling
@@ -24,9 +25,11 @@ The extension zip must include:
 - `icon-128.png` - 128x128 icon
 
 ### Optional Files
+
 - `README.md` - User-facing documentation (recommended for reviewers)
 
 ### Files to Exclude
+
 - `.git/` - Version control
 - `.gitignore` - Git configuration
 - `CLAUDE.md` - Development notes
@@ -36,11 +39,13 @@ The extension zip must include:
 ## Build Script
 
 ### Quick Build (macOS/Linux)
+
 ```bash
 ./build.sh
 ```
 
 ### Manual Build
+
 ```bash
 # Create zip excluding development files
 zip -r playfaster.zip . \
@@ -59,15 +64,17 @@ The build script (`build.sh`) automates this process. It's already executable in
 ## Chrome Web Store Submission Checklist
 
 ### 1. Test the Extension
+
 - [ ] Load unpacked version in `chrome://extensions` with Developer mode
 - [ ] Test on target e-learning platform
-- [ ] Test playback rate selection (0.1x–16x range, increment buttons, mouse wheel)
+- [ ] Test playback rate selection (0.1x–64x range, increment buttons, mouse wheel)
 - [ ] Verify rate persists across page reloads
 - [ ] Check for console errors
 
 ### 2. Prepare Store Listing
 
 #### Required Assets
+
 - [ ] Extension package (playfaster.zip)
 - [ ] Store icon: 128x128 PNG (use `icon-128.png`)
 - [ ] Small promo tile: 440x280 PNG
@@ -75,24 +82,27 @@ The build script (`build.sh`) automates this process. It's already executable in
 - [ ] Screenshots: 1280x800 or 640x400 PNG/JPG (at least 1, max 5)
 
 **Screenshot Tips:**
+
 - Show the popup interface with the speed input and increment/decrement buttons
 - Demonstrate use on popular platforms (YouTube, Vimeo, etc.)
-- Highlight the speed range (0.1x - 16x)
+- Highlight the speed range (0.1x - 64x)
 - Show before/after of speed controls on a video player
 
 #### Store Listing Text
 
 **Short description (132 characters max):**
+
 ```
-Fine-tune video & audio playback speed from 0.1x to 16x. Perfect for power users, fast learners, and accessibility needs.
+Fine-tune video & audio playback speed from 0.1x to 64x. Perfect for power users, fast learners, and accessibility needs.
 ```
 
 **Detailed description (400+ characters recommended):**
+
 ```
 PlayFaster gives you complete control over media playback speed across all websites.
 
 FEATURES:
-• Wide speed range: 0.1x to 16x playback
+• Wide speed range: 0.1x to 64x playback
 • Fine-grained controls: adjust by 0.1x or 0.5x increments
 • Direct input: type any speed value for precision
 • Mouse wheel support: scroll to adjust speed quickly
@@ -118,6 +128,7 @@ Take control of your learning pace. Never be limited by arbitrary speed restrict
 - [ ] Language: English
 
 ### 3. Submit for Review
+
 1. Go to [Chrome Web Store Developer Dashboard](https://chrome.google.com/webstore/devconsole)
 2. Click "New Item"
 3. Upload `playfaster.zip`
@@ -126,6 +137,7 @@ Take control of your learning pace. Never be limited by arbitrary speed restrict
 6. Submit for review
 
 ### 4. Review Process
+
 - **Typical review time:** 1-3 business days
 - **Status:** Check dashboard for review status
 - **Common rejection reasons:**
@@ -138,11 +150,13 @@ Take control of your learning pace. Never be limited by arbitrary speed restrict
 When updating the extension:
 
 1. Update version in `manifest.json`:
+
    ```json
    "version": "1.0.2"
    ```
 
 2. Rebuild the package:
+
    ```bash
    ./build.sh
    ```
@@ -164,6 +178,7 @@ If reviewers ask about permissions (include in store description):
 A complete privacy policy has been created in `PRIVACY.md`.
 
 **To use it in the Chrome Web Store:**
+
 1. Push `PRIVACY.md` to your GitHub repository
 2. Get the raw GitHub URL: `https://github.com/Whiteboard-Works/play-faster/blob/master/PRIVACY.md`
 3. Paste this URL in the "Privacy Policy" field during Chrome Web Store submission
@@ -196,14 +211,17 @@ A complete privacy policy has been created in `PRIVACY.md`.
 ## Troubleshooting Build Issues
 
 ### "Permission denied" when running build.sh
+
 ```bash
 chmod +x build.sh
 ```
 
 ### Zip command not found (Windows)
+
 Install via WSL or use Git Bash, or use a GUI tool like 7-Zip
 
 ### Files missing from zip
+
 Check that all files listed in "Required Files" section exist in project directory
 
 ## Resources

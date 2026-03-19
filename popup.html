@@ -1,103 +1,225 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
 
-    body {
-      width: 240px;
-      padding: 16px;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #fff;
-    }
+      body {
+        width: 240px;
+        padding: 16px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: #fff;
+        position: relative;
+      }
 
-    .label {
-      text-align: center;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      color: #9ca3af;
-      margin-bottom: 10px;
-    }
+      .title {
+        text-align: center;
+        font-size: 13px;
+        font-weight: 700;
+        color: #16a34a;
+        margin-bottom: 10px;
+        letter-spacing: -0.01em;
+      }
 
-    .controls {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
+      #gearBtn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 26px;
+        height: 26px;
+        padding: 0;
+        border: none;
+        background: none;
+        cursor: pointer;
+        font-size: 20px;
+        color: #9ca3af;
+        border-radius: 5px;
+        transition:
+          color 0.1s,
+          background 0.1s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
 
-    .controls button {
-      width: 32px;
-      height: 32px;
-      padding: 0;
-      cursor: pointer;
-      font-size: 13px;
-      font-weight: 600;
-      color: #374151;
-      border: 1px solid #e5e7eb;
-      border-radius: 6px;
-      background: #f9fafb;
-      transition: background 0.1s, border-color 0.1s;
-      flex-shrink: 0;
-    }
+      #gearBtn:hover {
+        color: #374151;
+        background: #f3f4f6;
+      }
+      #gearBtn.open {
+        color: #16a34a;
+        background: #f0fdf4;
+      }
 
-    .controls button:hover {
-      background: #f0fdf4;
-      border-color: #22c55e;
-      color: #16a34a;
-    }
+      .controls {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
 
-    input[type="number"] {
-      flex: 1;
-      height: 32px;
-      text-align: center;
-      font-size: 15px;
-      font-weight: 700;
-      color: #111827;
-      border: 1px solid #e5e7eb;
-      border-radius: 6px;
-      background: #fff;
-      -moz-appearance: textfield;
-    }
+      .controls button {
+        width: 32px;
+        height: 32px;
+        padding: 0;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 600;
+        color: #374151;
+        border: 1px solid #e5e7eb;
+        border-radius: 6px;
+        background: #f9fafb;
+        transition:
+          background 0.1s,
+          border-color 0.1s;
+        flex-shrink: 0;
+      }
 
-    input[type="number"]:focus {
-      outline: none;
-      border-color: #22c55e;
-    }
+      .controls button:hover {
+        background: #f0fdf4;
+        border-color: #22c55e;
+        color: #16a34a;
+      }
 
-    input[type="number"]::-webkit-outer-spin-button,
-    input[type="number"]::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
+      input[type="number"] {
+        flex: 1;
+        height: 32px;
+        text-align: center;
+        font-size: 15px;
+        font-weight: 700;
+        color: #111827;
+        border: 1px solid #e5e7eb;
+        border-radius: 6px;
+        background: #fff;
+        -moz-appearance: textfield;
+      }
 
-    .footer {
-      margin-top: 10px;
-      text-align: center;
-      font-size: 9px;
-      color: #d1d5db;
-    }
+      input[type="number"]:focus {
+        outline: none;
+        border-color: #22c55e;
+      }
 
-    .footer a {
-      color: #d1d5db;
-      text-decoration: none;
-    }
+      input[type="number"]::-webkit-outer-spin-button,
+      input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
 
-    .footer a:hover {
-      color: #9ca3af;
-    }
-  </style>
-</head>
-<body>
-  <div class="label">SPEED</div>
-  <div class="controls">
-    <button class="large" data-delta="-0.5">&lt;&lt;</button>
-    <button data-delta="-0.1">&lt;</button>
-    <input type="number" id="speed" min="0.1" max="16" step="0.1">
-    <button data-delta="0.1">&gt;</button>
-    <button class="large" data-delta="0.5">&gt;&gt;</button>
-  </div>
-  <div class="footer"><a href="https://whiteboardworks.com" target="_blank" rel="noopener">whiteboardworks.com</a></div>
-  <script src="popup.js"></script>
-</body>
+      /* Settings */
+
+      #settingsPanel {
+        display: none;
+        margin-top: 12px;
+        padding-top: 10px;
+        border-top: 1px solid #f3f4f6;
+      }
+
+      .setting-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        margin-bottom: 7px;
+      }
+
+      .setting-label {
+        font-size: 11px;
+        color: #6b7280;
+        white-space: nowrap;
+      }
+
+      .setting-row input[type="text"] {
+        flex: 1;
+        height: 26px;
+        padding: 0 6px;
+        font-size: 11px;
+        font-weight: 600;
+        color: #374151;
+        border: 1px solid #e5e7eb;
+        border-radius: 5px;
+        background: #f9fafb;
+        cursor: pointer;
+        text-align: center;
+      }
+
+      .setting-row input[type="text"]:focus {
+        outline: none;
+        border-color: #22c55e;
+        background: #f0fdf4;
+        color: #15803d;
+      }
+
+      .setting-row input[type="text"].recording {
+        border-color: #f59e0b;
+        background: #fffbeb;
+        color: #92400e;
+      }
+
+      .setting-row input[type="number"] {
+        flex: 1;
+        height: 26px;
+        font-size: 11px;
+        font-weight: 600;
+      }
+
+      .footer {
+        margin-top: 10px;
+        text-align: center;
+        font-size: 9px;
+        color: #d1d5db;
+      }
+
+      .footer a {
+        color: #d1d5db;
+        text-decoration: none;
+      }
+
+      .footer a:hover {
+        color: #9ca3af;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="title">PlayFaster</div>
+    <button id="gearBtn" title="Settings">&#9881;</button>
+    <div class="controls">
+      <button id="btnLargeDown">&lt;&lt;</button>
+      <button id="btnSmallDown">&lt;</button>
+      <input type="number" id="speed" min="0.1" max="64" step="0.1" value="2" />
+      <button id="btnSmallUp">&gt;</button>
+      <button id="btnLargeUp">&gt;&gt;</button>
+    </div>
+
+    <div id="settingsPanel">
+      <div class="setting-row">
+        <span class="setting-label">Activate key</span>
+        <input type="text" id="shortcutInput" readonly placeholder="Click to record · Esc to clear" />
+      </div>
+      <div class="setting-row">
+        <span class="setting-label">Small step (&lt; &gt;)</span>
+        <input type="number" id="smallStep" min="0.05" max="2" step="0.05" />
+      </div>
+      <div class="setting-row">
+        <span class="setting-label">Large step (&lt;&lt; &gt;&gt;)</span>
+        <input type="number" id="largeStep" min="0.1" max="4" step="0.1" />
+      </div>
+      <div class="setting-row">
+        <span class="setting-label">Min speed</span>
+        <input type="number" id="minSpeed" min="0.1" max="16" step="0.1" />
+      </div>
+      <div class="setting-row">
+        <span class="setting-label">Max speed</span>
+        <input type="number" id="maxSpeed" min="0.5" max="64" step="0.5" />
+      </div>
+    </div>
+
+    <div class="footer">
+      <a href="https://whiteboardworks.com" target="_blank" rel="noopener">whiteboardworks.com</a>
+    </div>
+    <script src="popup.js"></script>
+  </body>
 </html>

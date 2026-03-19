@@ -29,6 +29,7 @@ The Extension uses Chrome's local storage API (`chrome.storage.local`) to store 
 - **Your playback speed preference** (a single number, e.g., "2.5")
 
 This data:
+
 - Stays entirely on your device
 - Never leaves your computer
 - Is not transmitted to any server
@@ -40,6 +41,7 @@ This data:
 The Extension requires certain permissions to function. Here's what each permission is used for:
 
 ### Storage Permission
+
 **Purpose:** Save your playback speed preference locally on your device.
 
 **What it accesses:** Only the speed setting you choose (e.g., 2x, 3x, etc.)
@@ -47,6 +49,7 @@ The Extension requires certain permissions to function. Here's what each permiss
 **What it does NOT access:** Browsing history, passwords, personal data, or any other information.
 
 ### Scripting Permission
+
 **Purpose:** Inject code into web pages to modify video and audio playback speed.
 
 **What it accesses:** Only HTML video and audio elements on pages you visit.
@@ -54,6 +57,7 @@ The Extension requires certain permissions to function. Here's what each permiss
 **What it does NOT access:** Form data, passwords, cookies, or personal information.
 
 ### WebNavigation Permission
+
 **Purpose:** Detect when pages load so the Extension can apply your speed preference automatically.
 
 **What it accesses:** Notification that a page has loaded (not the page content).
@@ -61,6 +65,7 @@ The Extension requires certain permissions to function. Here's what each permiss
 **What it does NOT access:** Your browsing history or the content of pages you visit.
 
 ### Host Permissions (<all_urls>)
+
 **Purpose:** Allow the Extension to work on all video platforms (YouTube, Vimeo, training sites, etc.) and handle videos embedded in iframes from different domains.
 
 **What it accesses:** Video and audio elements on any website where they appear.
@@ -104,6 +109,7 @@ Since the Extension collects no data and transmits no data, there is no data to 
 ## Your Rights
 
 Since we collect no data about you, there is no data to:
+
 - Request access to
 - Request deletion of
 - Request correction of
@@ -121,6 +127,7 @@ If you have questions about this privacy policy or the Extension's operation, pl
 ## Compliance
 
 This Extension complies with:
+
 - Chrome Web Store Developer Program Policies
 - General Data Protection Regulation (GDPR)
 - California Consumer Privacy Act (CCPA)

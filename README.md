@@ -4,14 +4,14 @@
   <img src="icon-128.png" alt="PlayFaster" width="128" height="128">
 </p>
 
-**Break free from the 2× limit.** PlayFaster is a Chrome extension that lets you set *any* playback speed from 0.1× to 16× on YouTube, Vimeo, Loom, corporate training portals, and more.
+**Break free from the 2× limit.** PlayFaster is a Chrome extension that lets you set _any_ playback speed from 0.1× to 64× on YouTube, Vimeo, Loom, corporate training portals, and more.
 
-> 🔗 **Install from the Chrome Web Store:** [chromewebstore.google.com/detail/playfaster/fppcbkhpahkbgijkdcpjgjmhpfbmfiih](https://chromewebstore.google.com/detail/playfaster/fppcbkhpahkbgijkdcpjgjmhpfbmfiih)  \
+> 🔗 **Install from the Chrome Web Store:** [chromewebstore.google.com/detail/playfaster/fppcbkhpahkbgijkdcpjgjmhpfbmfiih](https://chromewebstore.google.com/detail/playfaster/fppcbkhpahkbgijkdcpjgjmhpfbmfiih) \
 > 🌐 **Landing page & screenshots:** [https://playfaster.app](https://playfaster.app)
 
 ## Features
 
-- **Wide Speed Range:** Control playback from 0.1x up to 16x speed
+- **Wide Speed Range:** Control playback from 0.1x up to 64x speed
 - **Fine-Grained Control:** Adjust speed by 0.1x or 0.5x increments with buttons
 - **Direct Input:** Type in any speed value for precise control
 - **Mouse Wheel Support:** Scroll in the popup to adjust speed quickly
@@ -45,7 +45,7 @@ This extension removes those limitations, giving you full control over your view
 1. Navigate to any video or audio page (YouTube, Vimeo, training site, etc.)
 2. Click the extension icon in your toolbar
 3. Adjust your playback speed using any method:
-   - **Type directly:** Enter any value from 0.1 to 16
+   - **Type directly:** Enter any value from 0.1 to 64
    - **Fine tune:** Click `<` or `>` to adjust by 0.1x
    - **Quick adjust:** Click `<<` or `>>` to adjust by 0.5x
    - **Mouse wheel:** Scroll up/down in the popup to adjust by 0.1x
@@ -67,6 +67,7 @@ For developers interested in how this works, see [CLAUDE.md](CLAUDE.md) for impl
 ## Privacy
 
 This extension:
+
 - ✓ Stores your speed preference locally
 - ✓ Only affects video playback on pages you visit
 - ✗ Does NOT collect or transmit any data

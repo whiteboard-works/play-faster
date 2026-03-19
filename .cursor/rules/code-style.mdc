@@ -1,0 +1,35 @@
+---
+description: Lint and Prettier conventions for Play Faster
+globs: "**/*.{js,html,json}"
+alwaysApply: true
+---
+
+# Code Style (AI Enforcement)
+
+When editing code in this project, follow these conventions:
+
+## Formatting (Prettier)
+
+- **No semicolons** (`semi: false`)
+- **Double quotes** for strings (`singleQuote: false`)
+- **2 spaces** for indentation
+- **100 chars** max line width
+- **trailingComma: es5** — trailing commas where valid in ES5
+- **arrowParens: always** — `(x) => x` not `x => x`
+
+## Lint Rules
+
+- Use `const` / `let`, never `var`
+- Use `===` / `!==`, never `==` / `!=`
+- Prefer template literals over string concatenation
+- Prefer arrow functions for callbacks
+- Fix or acknowledge unused variables
+
+## Commands
+
+```bash
+npm run lint        # Check lint
+npm run lint:fix    # Auto-fix lint
+npm run format      # Format with Prettier
+npm run format:check  # Check formatting
+```

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "PlayFaster",
-  "version": "1.0.3",
+  "version": "1.2.0",
   "description": "Enhanced playback speed control for online videos and audio. Works on YouTube, Vimeo, Loom, and most e-learning platforms.",
   "permissions": ["storage", "scripting", "webNavigation"],
   "host_permissions": ["<all_urls>"],
