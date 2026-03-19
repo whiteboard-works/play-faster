@@ -41,9 +41,9 @@ chrome.webNavigation.onCommitted.addListener((details) => {
 })
 
 function updateBadge(rate) {
-  const text = rate === 1 ? "" : `${rate.toString().replace(/\.?0+$/, "")}x`
+  const text = rate === 1 ? "" : `${rate.toString().replace(/\.?0+$/, "")}`
   chrome.action.setBadgeText({ text })
-  chrome.action.setBadgeBackgroundColor({ color: "#4CAF50" })
+  chrome.action.setBadgeBackgroundColor({ color: "#ffffff" })
 }
 
 chrome.storage.local.get("playbackRate", (data) => {

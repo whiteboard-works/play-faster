@@ -2,7 +2,23 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,900&display=swap"
+      rel="stylesheet"
+    />
     <style>
+      :root {
+        --bg: #000000;
+        --blue: #5bc4e8;
+        --blue-faint: rgba(91, 196, 232, 0.1);
+        --blue-border: #5bc4e8;
+        --white: #ffffff;
+        --muted: #6b7280;
+        --ink: #0f172a;
+      }
+
       * {
         box-sizing: border-box;
         margin: 0;
@@ -10,220 +26,433 @@
       }
 
       body {
-        width: 240px;
-        padding: 16px;
+        width: 360px;
+        padding: 24px 12px 12px;
+        background: var(--bg);
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        background: #fff;
+      }
+
+      /* ── Popup wrapper with blue border ── */
+      .popup-wrapper {
+        border: 2px solid var(--blue-border);
+        border-radius: 20px;
+        padding: 16px 20px 16px;
         position: relative;
       }
 
-      .title {
-        text-align: center;
-        font-size: 13px;
-        font-weight: 700;
-        color: #16a34a;
-        margin-bottom: 10px;
-        letter-spacing: -0.01em;
-      }
-
-      #gearBtn {
+      /* ── Top icon straddling the border ── */
+      .top-icon {
         position: absolute;
-        top: 10px;
-        right: 10px;
-        width: 26px;
-        height: 26px;
-        padding: 0;
-        border: none;
-        background: none;
-        cursor: pointer;
-        font-size: 20px;
-        color: #9ca3af;
-        border-radius: 5px;
-        transition:
-          color 0.1s,
-          background 0.1s;
+        top: -17px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 48px;
+        height: 28px;
+        background: var(--bg);
         display: flex;
-        align-items: center;
+        align-items: flex-end;
         justify-content: center;
       }
 
-      #gearBtn:hover {
-        color: #374151;
-        background: #f3f4f6;
-      }
-      #gearBtn.open {
-        color: #16a34a;
-        background: #f0fdf4;
+      .top-icon img {
+        width: 35px;
+        height: 35px;
+        margin-bottom: -8px;
       }
 
+      /* ── Title ── */
+      .title {
+        display: block;
+        text-align: center;
+        font-size: 24px;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        margin-bottom: 16px;
+        margin-top: 8px;
+        text-decoration: none;
+      }
+
+      .title-play {
+        color: var(--blue);
+        font-style: italic;
+      }
+
+      .title-faster {
+        color: var(--white);
+      }
+
+      /* ── Gear button ── */
+      #gearBtn {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        width: 34px;
+        height: 34px;
+        padding: 4px;
+        border: none;
+        outline: none;
+        background: none;
+        cursor: pointer;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0.75;
+        transition:
+          opacity 0.15s,
+          background 0.15s;
+      }
+
+      #gearBtn:hover {
+        opacity: 1;
+        background: var(--blue-faint);
+      }
+
+      #gearBtn.open {
+        opacity: 1;
+      }
+
+      #gearBtn img {
+        width: 24px;
+        height: 24px;
+      }
+
+      /* ── Speed controls ── */
       .controls {
         display: flex;
         align-items: center;
-        gap: 4px;
+        justify-content: space-around;
+        width: 100%;
+        margin-bottom: 14px;
       }
 
-      .controls button {
-        width: 32px;
-        height: 32px;
-        padding: 0;
+      .btn-icon {
+        background: none;
+        border: none;
+        outline: none;
         cursor: pointer;
-        font-size: 13px;
-        font-weight: 600;
-        color: #374151;
-        border: 1px solid #e5e7eb;
-        border-radius: 6px;
-        background: #f9fafb;
+        padding: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        opacity: 0.65;
         transition:
-          background 0.1s,
-          border-color 0.1s;
+          opacity 0.15s,
+          background 0.15s;
+      }
+
+      .btn-icon:hover {
+        opacity: 1;
+        background: var(--blue-faint);
+      }
+
+      .btn-icon img {
+        height: 28px;
+        width: auto;
+        display: block;
+      }
+
+      .btn-icon.large img {
+        height: 30px;
+      }
+
+      .flip-h {
+        transform: scaleX(-1);
+      }
+
+      /* ── Speed circle ── */
+      .speed-circle {
+        width: 60px;
+        height: 60px;
+        background: var(--white);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         flex-shrink: 0;
       }
 
-      .controls button:hover {
-        background: #f0fdf4;
-        border-color: #22c55e;
-        color: #16a34a;
-      }
-
-      input[type="number"] {
-        flex: 1;
-        height: 32px;
+      #speed {
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        border: none;
+        background: transparent;
         text-align: center;
-        font-size: 15px;
-        font-weight: 700;
-        color: #111827;
-        border: 1px solid #e5e7eb;
-        border-radius: 6px;
-        background: #fff;
+        font-family: "Montserrat", sans-serif;
+        font-size: 24px;
+        font-weight: 900;
+        font-style: italic;
+        color: var(--ink);
+        outline: none;
         -moz-appearance: textfield;
       }
 
-      input[type="number"]:focus {
-        outline: none;
-        border-color: #22c55e;
-      }
-
-      input[type="number"]::-webkit-outer-spin-button,
-      input[type="number"]::-webkit-inner-spin-button {
+      #speed::-webkit-outer-spin-button,
+      #speed::-webkit-inner-spin-button {
         -webkit-appearance: none;
         margin: 0;
       }
 
-      /* Settings */
-
-      #settingsPanel {
-        display: none;
-        margin-top: 12px;
-        padding-top: 10px;
-        border-top: 1px solid #f3f4f6;
+      /* ── Scroll hint ── */
+      .scroll-hint {
+        text-align: center;
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--blue);
+        letter-spacing: 0.01em;
+        margin-bottom: 16px;
       }
 
+      /* ── Settings panel ── */
+      #settingsPanel {
+        display: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.07);
+        padding-top: 14px;
+      }
+
+      /* Activate Overlay row */
+      .shortcut-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 14px;
+      }
+
+      /* Setting labels */
+      .setting-label {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--white);
+        white-space: nowrap;
+        min-width: 86px;
+      }
+
+      .setting-label small {
+        display: block;
+        font-weight: 400;
+        color: var(--muted);
+        font-size: 11px;
+        margin-top: 2px;
+      }
+
+      /* Shortcut button */
+      #shortcutInput {
+        flex: 1;
+        height: 42px;
+        background: var(--blue);
+        border: none;
+        border-radius: 10px;
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--ink);
+        text-align: center;
+        cursor: pointer;
+        outline: none;
+      }
+
+      #shortcutInput.recording {
+        background: #000000;
+        color: #ffffff;
+        border: 2px solid #ffffff;
+      }
+
+      /* Customize speeds header */
+      .speeds-header {
+        text-align: center;
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--blue);
+        margin-bottom: 12px;
+      }
+
+      /* Step control rows */
       .setting-row {
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        gap: 8px;
-        margin-bottom: 7px;
+        gap: 12px;
+        margin-bottom: 10px;
       }
 
-      .setting-label {
-        font-size: 11px;
-        color: #6b7280;
-        white-space: nowrap;
-      }
-
-      .setting-row input[type="text"] {
+      .step-control {
         flex: 1;
-        height: 26px;
-        padding: 0 6px;
-        font-size: 11px;
-        font-weight: 600;
-        color: #374151;
-        border: 1px solid #e5e7eb;
-        border-radius: 5px;
-        background: #f9fafb;
-        cursor: pointer;
-        text-align: center;
+        height: 42px;
+        border: 1.5px solid var(--blue-border);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
       }
 
-      .setting-row input[type="text"]:focus {
+      .step-btn {
+        background: none;
+        border: none;
         outline: none;
-        border-color: #22c55e;
-        background: #f0fdf4;
-        color: #15803d;
+        cursor: pointer;
+        width: 36px;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        opacity: 0.75;
+        transition:
+          opacity 0.15s,
+          background 0.15s;
       }
 
-      .setting-row input[type="text"].recording {
-        border-color: #f59e0b;
-        background: #fffbeb;
-        color: #92400e;
+      .step-btn:hover {
+        opacity: 1;
+        background: var(--blue-faint);
       }
 
-      .setting-row input[type="number"] {
+      .step-btn img {
+        width: 18px;
+        height: auto;
+        display: block;
+      }
+
+      .step-input {
         flex: 1;
-        height: 26px;
-        font-size: 11px;
-        font-weight: 600;
+        height: 100%;
+        background: transparent;
+        border: none;
+        text-align: center;
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--white);
+        outline: none;
+        -moz-appearance: textfield;
       }
 
+      .step-input::-webkit-outer-spin-button,
+      .step-input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      /* ── Footer ── */
       .footer {
-        margin-top: 10px;
+        margin-top: 14px;
         text-align: center;
-        font-size: 9px;
-        color: #d1d5db;
+        font-size: 10px;
+        color: #374151;
       }
 
       .footer a {
-        color: #d1d5db;
+        color: #374151;
         text-decoration: none;
       }
 
       .footer a:hover {
-        color: #9ca3af;
+        color: var(--muted);
       }
     </style>
   </head>
   <body>
-    <div class="title">PlayFaster</div>
-    <button id="gearBtn" title="Settings">&#9881;</button>
-    <div class="controls">
-      <button id="btnLargeDown">&lt;&lt;</button>
-      <button id="btnSmallDown">&lt;</button>
-      <input type="number" id="speed" min="0.1" max="64" step="0.1" value="2" />
-      <button id="btnSmallUp">&gt;</button>
-      <button id="btnLargeUp">&gt;&gt;</button>
-    </div>
+    <div class="popup-wrapper">
+      <div class="top-icon">
+        <img src="icons/playfaster-icon.png" alt="" />
+      </div>
 
-    <div id="settingsPanel">
-      <div class="setting-row">
-        <span class="setting-label">Activate key</span>
-        <input
-          type="text"
-          id="shortcutInput"
-          readonly
-          placeholder="Click to record · Esc to clear"
-        />
-      </div>
-      <div class="setting-row">
-        <span class="setting-label">Small step (&lt; &gt;)</span>
-        <input type="number" id="smallStep" min="0.05" max="2" step="0.05" />
-      </div>
-      <div class="setting-row">
-        <span class="setting-label">Large step (&lt;&lt; &gt;&gt;)</span>
-        <input type="number" id="largeStep" min="0.1" max="4" step="0.1" />
-      </div>
-      <div class="setting-row">
-        <span class="setting-label">Min speed</span>
-        <input type="number" id="minSpeed" min="0.1" max="16" step="0.1" />
-      </div>
-      <div class="setting-row">
-        <span class="setting-label">Max speed</span>
-        <input type="number" id="maxSpeed" min="0.5" max="64" step="0.5" />
-      </div>
-    </div>
+      <button id="gearBtn" title="Settings">
+        <img src="icons/gear.png" alt="Settings" />
+      </button>
 
-    <div class="footer">
-      <a href="https://whiteboardworks.com" target="_blank" rel="noopener">whiteboardworks.com</a>
+      <a href="https://playfaster.app" target="_blank" rel="noopener" class="title">
+        <span class="title-play">Play</span><span class="title-faster">Faster</span>
+      </a>
+
+      <div class="controls">
+        <button id="btnLargeDown" class="btn-icon large" title="Large step back">
+          <img src="icons/big-step.png" class="flip-h" alt="&lt;&lt;" />
+        </button>
+        <button id="btnSmallDown" class="btn-icon" title="Small step back">
+          <img src="icons/small-step.png" class="flip-h" alt="&lt;" />
+        </button>
+        <div class="speed-circle">
+          <input type="number" id="speed" min="0.1" max="64" step="0.1" value="2" />
+        </div>
+        <button id="btnSmallUp" class="btn-icon" title="Small step forward">
+          <img src="icons/small-step.png" alt="&gt;" />
+        </button>
+        <button id="btnLargeUp" class="btn-icon large" title="Large step forward">
+          <img src="icons/big-step.png" alt="&gt;&gt;" />
+        </button>
+      </div>
+
+      <p class="scroll-hint">Scroll to adjust speed</p>
+
+      <div id="settingsPanel">
+        <div class="shortcut-row">
+          <span class="setting-label">Activate Overlay</span>
+          <input
+            type="text"
+            id="shortcutInput"
+            readonly
+            placeholder="Click to record · Esc to clear"
+          />
+        </div>
+
+        <p class="speeds-header">Customize your speeds</p>
+
+        <div class="setting-row">
+          <span class="setting-label">Small Step<small>(Scroll)</small></span>
+          <div class="step-control">
+            <button class="step-btn" data-action="dec" data-target="smallStep">
+              <img src="icons/blue-adjust-triangle.png" class="flip-h" alt="&lt;" />
+            </button>
+            <input type="number" class="step-input" id="smallStep" min="0.1" max="2" step="0.1" />
+            <button class="step-btn" data-action="inc" data-target="smallStep">
+              <img src="icons/blue-adjust-triangle.png" alt="&gt;" />
+            </button>
+          </div>
+        </div>
+
+        <div class="setting-row">
+          <span class="setting-label">Large Step<small>(Shift+Scroll)</small></span>
+          <div class="step-control">
+            <button class="step-btn" data-action="dec" data-target="largeStep">
+              <img src="icons/blue-adjust-triangle.png" class="flip-h" alt="&lt;" />
+            </button>
+            <input type="number" class="step-input" id="largeStep" min="0.1" max="4" step="0.1" />
+            <button class="step-btn" data-action="inc" data-target="largeStep">
+              <img src="icons/blue-adjust-triangle.png" alt="&gt;" />
+            </button>
+          </div>
+        </div>
+
+        <div class="setting-row">
+          <span class="setting-label">Min Speed</span>
+          <div class="step-control">
+            <button class="step-btn" data-action="dec" data-target="minSpeed">
+              <img src="icons/blue-adjust-triangle.png" class="flip-h" alt="&lt;" />
+            </button>
+            <input type="number" class="step-input" id="minSpeed" min="0.1" max="16" step="0.1" />
+            <button class="step-btn" data-action="inc" data-target="minSpeed">
+              <img src="icons/blue-adjust-triangle.png" alt="&gt;" />
+            </button>
+          </div>
+        </div>
+
+        <div class="setting-row">
+          <span class="setting-label">Max Speed</span>
+          <div class="step-control">
+            <button class="step-btn" data-action="dec" data-target="maxSpeed">
+              <img src="icons/blue-adjust-triangle.png" class="flip-h" alt="&lt;" />
+            </button>
+            <input type="number" class="step-input" id="maxSpeed" min="0.5" max="64" step="0.5" />
+            <button class="step-btn" data-action="inc" data-target="maxSpeed">
+              <img src="icons/blue-adjust-triangle.png" alt="&gt;" />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <a href="https://whiteboardworks.com" target="_blank" rel="noopener">whiteboardworks.com</a>
+      </div>
     </div>
     <script src="popup.js"></script>
   </body>

@@ -1,3 +1,16 @@
+// ---- Throttle helper ----
+
+function throttle(fn, ms) {
+  let last = 0
+  return function (...args) {
+    const now = Date.now()
+    if (now - last >= ms) {
+      last = now
+      fn.apply(this, args)
+    }
+  }
+}
+
 // ---- Settings defaults (declared first so all handlers below can reference kbSettings safely) ----
 
 const DEFAULT_KB_SETTINGS = {
@@ -63,11 +76,11 @@ input.addEventListener("change", () => {
   setRate(Number.parseFloat(input.value) || 2)
 })
 
-input.addEventListener("wheel", (e) => {
+input.addEventListener("wheel", throttle((e) => {
   e.preventDefault()
   const delta = e.deltaY < 0 ? kbSettings.smallStep : -kbSettings.smallStep
   setRate((Number.parseFloat(input.value) || 2) + delta)
-})
+}, 200))
 
 // ---- Settings Panel ----
 
@@ -171,6 +184,19 @@ shortcutInput.addEventListener("keydown", (e) => {
   saveSettings()
 })
 
+// Settings step buttons (< and > on each row)
+document.querySelectorAll(".step-btn[data-action]").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const input = document.getElementById(btn.dataset.target)
+    if (!input) return
+    const step = Number.parseFloat(input.step) || 0.1
+    const dir = btn.dataset.action === "inc" ? 1 : -1
+    const next = round((Number.parseFloat(input.value) || 0) + dir * step)
+    input.value = Math.min(Number.parseFloat(input.max), Math.max(Number.parseFloat(input.min), next))
+    input.dispatchEvent(new Event("change"))
+  })
+})
+
 // Step inputs
 smallStepInput.addEventListener("change", () => {
   const v = Number.parseFloat(smallStepInput.value)
@@ -221,12 +247,12 @@ document.addEventListener("keydown", (e) => {
 // Wheel to adjust speed (use closest() to reliably detect input focus during wheel)
 document.addEventListener(
   "wheel",
-  (e) => {
+  throttle((e) => {
     if (e.target.closest("input, select, textarea")) return
     e.preventDefault()
     const raw = e.shiftKey ? -e.deltaX : e.deltaY
     const step = e.shiftKey ? kbSettings.largeStep : kbSettings.smallStep
     setRate((Number.parseFloat(input.value) || 2) + (raw < 0 ? step : -step))
-  },
+  }, 200),
   { passive: false }
 )
