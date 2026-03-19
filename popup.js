@@ -200,7 +200,7 @@ document.querySelectorAll(".step-btn[data-action]").forEach((btn) => {
 // Step inputs
 smallStepInput.addEventListener("change", () => {
   const v = Number.parseFloat(smallStepInput.value)
-  if (!Number.isNaN(v) && v > 0 && v <= 2) {
+  if (!Number.isNaN(v) && v >= 0.1 && v <= 2) {
     kbSettings.smallStep = round(v)
     saveSettings()
   }
