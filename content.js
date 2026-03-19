@@ -38,46 +38,91 @@ if (window === window.top) {
   let hideTimer = null
   let inputBuffer = ""
 
+  const OVERLAY_BLUE = "#5bc4e8"
+  const OVERLAY_INK = "#0f172a"
+  const OVERLAY_FONT = '-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif'
+
+  const iconURL = (name) => chrome.runtime.getURL(`icons/${name}`)
+
+  function buildOverlayDOM() {
+    overlayEl = document.createElement("div")
+    overlayEl.style.cssText = [
+      "position:fixed",
+      "bottom:32px",
+      "left:50%",
+      "transform:translateX(-50%)",
+      `background:${OVERLAY_BLUE}`,
+      "border-radius:38px",
+      "padding:11px 26px 9px",
+      `font-family:${OVERLAY_FONT}`,
+      "z-index:2147483647",
+      "pointer-events:auto",
+      "opacity:0",
+      "text-align:center",
+      "width:270px",
+      "transition:opacity 0.15s ease",
+    ].join(";")
+
+    const btnStyle = (flip) => [
+      "background:none",
+      "border:none",
+      "padding:4px",
+      "cursor:pointer",
+      "display:flex",
+      "align-items:center",
+      "opacity:0.85",
+      flip ? "transform:scaleX(-1)" : "",
+    ].filter(Boolean).join(";")
+
+    const imgStyle = (h) =>
+      `height:${h}px;width:auto;display:block;filter:brightness(0)`
+
+    const big = iconURL("big-step.png")
+    const small = iconURL("small-step.png")
+
+    overlayEl.innerHTML =
+      `<div style="display:flex;align-items:center;justify-content:space-around;margin-bottom:6px">` +
+      `<button data-dir="-1" data-step="large" style="${btnStyle(true)}"><img src="${big}" style="${imgStyle(26)}" /></button>` +
+      `<button data-dir="-1" data-step="small" style="${btnStyle(true)}"><img src="${small}" style="${imgStyle(20)}" /></button>` +
+      `<div style="width:40px;height:40px;border-radius:50%;border:3px solid ${OVERLAY_INK};display:flex;align-items:center;justify-content:center;flex-shrink:0;background:rgba(0,0,0,0.08)">` +
+      `<span id="pf-speed" style="font-size:16px;font-weight:900;font-style:italic;color:${OVERLAY_INK};letter-spacing:-0.02em;font-family:Montserrat,sans-serif"></span>` +
+      `</div>` +
+      `<button data-dir="1" data-step="small" style="${btnStyle(false)}"><img src="${small}" style="${imgStyle(20)}" /></button>` +
+      `<button data-dir="1" data-step="large" style="${btnStyle(false)}"><img src="${big}" style="${imgStyle(26)}" /></button>` +
+      `</div>` +
+      `<div id="pf-hint" style="font-size:10px;font-weight:700;font-style:italic;color:${OVERLAY_INK}"></div>`
+
+    overlayEl.querySelectorAll("button[data-dir]").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation()
+        const dir = parseInt(btn.dataset.dir)
+        const step = btn.dataset.step === "large" ? kbSettings.largeStep : kbSettings.smallStep
+        applyRate(currentRate + dir * step)
+      })
+    })
+
+    // Prevent overlay wheel events from bubbling to the page
+    overlayEl.addEventListener("wheel", (e) => e.stopPropagation())
+
+    ;(document.body || document.documentElement).appendChild(overlayEl)
+  }
+
   function getOrCreateOverlay() {
-    if (!overlayEl) {
-      overlayEl = document.createElement("div")
-      overlayEl.style.cssText = [
-        "position:fixed",
-        "bottom:24px",
-        "right:24px",
-        "background:rgba(22,163,74,0.92)",
-        "color:#fff",
-        "border-radius:10px",
-        "padding:10px 18px",
-        'font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif',
-        "z-index:2147483647",
-        "pointer-events:none",
-        "opacity:0",
-        "text-align:center",
-        "transition:opacity 0.15s ease",
-      ].join(";")
-      ;(document.body || document.documentElement).appendChild(overlayEl)
-    }
+    if (!overlayEl) buildOverlayDOM()
     return overlayEl
   }
 
   function renderOverlay() {
     const el = getOrCreateOverlay()
-    if (inputBuffer) {
-      el.innerHTML =
-        `<div style="font-size:22px;font-weight:700;letter-spacing:-0.01em">${
-          inputBuffer
-        }<span style="opacity:0.5">|</span></div>` +
-        `<div style="font-size:10px;font-weight:500;opacity:0.8;margin-top:4px;letter-spacing:0.03em">` +
-        `Enter to confirm \u00b7 Esc to cancel` +
-        `</div>`
-    } else {
-      el.innerHTML =
-        `<div style="font-size:22px;font-weight:700;letter-spacing:-0.01em">${currentRate}x</div>` +
-        `<div style="font-size:10px;font-weight:500;opacity:0.8;margin-top:4px;letter-spacing:0.03em">` +
-        `\u2191\u2193 adjust \u00b7 Shift+scroll large step \u00b7 Esc to close` +
-        `</div>`
-    }
+
+    const speedEl = el.querySelector("#pf-speed")
+    const hintEl = el.querySelector("#pf-hint")
+
+    if (speedEl) speedEl.textContent = inputBuffer ? `${inputBuffer}|` : `${currentRate}`
+    if (hintEl) hintEl.textContent = inputBuffer
+      ? "Enter to confirm \u00b7 Esc to cancel"
+      : "Scroll to adjust speed"
+
     el.style.opacity = "1"
     clearTimeout(hideTimer)
     hideTimer = setTimeout(() => {
@@ -148,15 +193,14 @@ if (window === window.top) {
   }
 
   // Scroll handler — only registered while active
+  let lastWheel = 0
   function onControlWheel(e) {
     e.preventDefault()
     e.stopPropagation()
-    let raw
-    if (e.shiftKey) {
-      raw = e.deltaX // browser flips scroll to horizontal when Shift held, so reverse it
-    } else {
-      raw = e.deltaY
-    }
+    const now = Date.now()
+    if (now - lastWheel < 200) return
+    lastWheel = now
+    const raw = e.shiftKey ? e.deltaX : e.deltaY
     const step = e.shiftKey ? kbSettings.largeStep : kbSettings.smallStep
     applyRate(currentRate + (raw < 0 ? step : -step))
   }
