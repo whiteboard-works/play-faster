@@ -80,10 +80,6 @@ export function App() {
     chrome.runtime.sendMessage({ type: "rateChanged", rate: clamped } as Message).catch(() => {})
   }
 
-  const applyRate = (newRate: number) => {
-    applyRateImmediate(newRate)
-  }
-
   const applySettings = (updated: KbSettings) => {
     setLocalSettings(updated)
     setSettings(updated)
@@ -108,7 +104,7 @@ export function App() {
         <span class={styles.titleFaster}>Faster</span>
       </a>
 
-      <SpeedControl rate={rate} settings={settings} onRateChange={applyRate} />
+      <SpeedControl rate={rate} settings={settings} onRateChange={applyRateImmediate} />
 
       <p class={styles.scrollHint}>Scroll to adjust speed</p>
 
