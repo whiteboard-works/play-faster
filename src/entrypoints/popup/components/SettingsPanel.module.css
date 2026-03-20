@@ -25,3 +25,10 @@
   color: var(--blue);
   margin-bottom: 12px;
 }
+
+.version {
+  text-align: center;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.3);
+  margin-top: 14px;
+}

@@ -63,6 +63,8 @@ export function SettingsPanel({ settings, onSettingsChange }: Props) {
         step={0.5}
         onChange={(v) => update({ maxSpeed: v })}
       />
+
+      <p class={styles.version}>v{browser.runtime.getManifest().version}</p>
     </div>
   )
 }
