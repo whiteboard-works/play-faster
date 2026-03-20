@@ -1,7 +1,7 @@
 # PlayFaster
 
 <p align="center">
-  <img src="icon-128.png" alt="PlayFaster" width="128" height="128">
+  <img src="public/icon-128.png" alt="PlayFaster" width="128" height="128">
 </p>
 
 **Break free from the 2× limit.** PlayFaster is a browser extension (Chrome, Firefox) that lets you set _any_ playback speed from 0.1× to 64× on YouTube, Vimeo, Loom, corporate training portals, and more.
@@ -37,9 +37,9 @@ This extension removes those limitations, giving you full control over your view
 
 ### Manual install (developer mode)
 
-1. Clone or download this repository
-2. **Chrome:** Open `chrome://extensions` → Enable **Developer mode** → **Load unpacked** → select the project folder
-3. **Firefox:** Open `about:debugging` → **This Firefox** → **Load Temporary Add-on** → select `manifest.json` in the project folder
+1. Run `npm install` then `npm run build` (or `npm run build:firefox` for Firefox)
+2. **Chrome:** Open `chrome://extensions` → Enable **Developer mode** → **Load unpacked** → select `.output/chrome-mv3/`
+3. **Firefox:** Open `about:debugging` → **This Firefox** → **Load Temporary Add-on** → select any file in `.output/firefox-mv2/`
 4. The extension will appear in your toolbar immediately
 
 ## Usage
@@ -64,10 +64,6 @@ This extension removes those limitations, giving you full control over your view
 - **Accessibility:** Some users process audio information better at higher speeds
 - **Content Creators:** Review your own content quickly during editing
 
-## Technical Details
-
-For developers interested in how this works, see [CLAUDE.md](CLAUDE.md) for implementation details. Contributors: run `npm run lint` and `npm run format` before submitting changes.
-
 ## Privacy
 
 This extension:
@@ -85,10 +81,6 @@ This extension:
 - Issues & feature requests: [GitHub Issues](https://github.com/whiteboard-works/play-faster/issues)
 - Website & screenshots: [playfaster.app](https://playfaster.app)
 - Email: [info@playfaster.app](mailto:info@playfaster.app)
-
-## License
-
-MIT License - Feel free to use, modify, and distribute.
 
 ---
 
