@@ -15,14 +15,14 @@ Both store jobs run in parallel. Chrome uploads and submits for review immediate
 
 Set these once in **Settings → Secrets and variables → Actions**:
 
-| Secret | Where to get it |
-|---|---|
-| `CHROME_EXTENSION_ID` | CWS dashboard URL: `...detail/.../`**`<id>`** |
-| `CHROME_CLIENT_ID` | Google Cloud Console → APIs & Services → Credentials → OAuth 2.0 Client |
-| `CHROME_CLIENT_SECRET` | Same OAuth client |
+| Secret                 | Where to get it                                                                                                             |
+| ---------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `CHROME_EXTENSION_ID`  | CWS dashboard URL: `...detail/.../`**`<id>`**                                                                               |
+| `CHROME_CLIENT_ID`     | Google Cloud Console → APIs & Services → Credentials → OAuth 2.0 Client                                                     |
+| `CHROME_CLIENT_SECRET` | Same OAuth client                                                                                                           |
 | `CHROME_REFRESH_TOKEN` | Run the [CWS OAuth token exchange](https://developer.chrome.com/docs/webstore/using-api/#oauth) once to get a refresh token |
-| `FIREFOX_API_KEY` | [addons.mozilla.org/developers/addon/api/key](https://addons.mozilla.org/developers/addon/api/key/) — JWT Issuer |
-| `FIREFOX_API_SECRET` | Same page — JWT Secret |
+| `FIREFOX_API_KEY`      | [addons.mozilla.org/developers/addon/api/key](https://addons.mozilla.org/developers/addon/api/key/) — JWT Issuer            |
+| `FIREFOX_API_SECRET`   | Same page — JWT Secret                                                                                                      |
 
 ### Chrome OAuth one-time setup
 
