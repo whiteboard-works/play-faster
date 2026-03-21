@@ -1,0 +1,22 @@
+name: Build Health
+
+on:
+  schedule:
+    - cron: "0 6 * * *" # Daily 6am UTC
+  workflow_dispatch: # Manual trigger
+
+jobs:
+  build:
+    name: Daily build check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+      - run: npm ci
+      - name: Build Chrome
+        run: npm run build
+      - name: Build Firefox
+        run: npm run build:firefox
