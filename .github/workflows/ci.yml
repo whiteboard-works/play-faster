@@ -1,5 +1,6 @@
 # GitHub Actions — WXT Extension (lat-tab, play-faster)
-# Triggers: push to develop (CI), merge to master with version bump (deploy)
+# CI: runs on every push to develop and every PR to master
+# Deploy: runs on push to master when manifest.json version changes
 name: CI / Deploy
 
 on:
@@ -16,8 +17,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: "20"
+          cache: "npm"
       - run: npm ci
       - run: npm run lint
       - run: npm run build
@@ -40,25 +41,55 @@ jobs:
       - name: Check version bump
         id: version_check
         run: |
-          OLD=$(git show HEAD~1:package.json | python3 -c "import sys,json; print(json.load(sys.stdin).get('version','0'))")
+          OLD=$(git show HEAD~1:package.json 2>/dev/null | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('version','0'))" 2>/dev/null || echo "0")
           NEW=$(python3 -c "import json; print(json.load(open('package.json')).get('version','0'))")
-          echo "old=$OLD"
-          echo "new=$NEW"
-          echo "bumped=$([ '$OLD' != '$NEW' ] && echo true || echo false)" >> $GITHUB_OUTPUT
-      - name: Skip if no version bump
-        if: steps.version_check.outputs.bumped != 'true'
-        run: echo "No version bump — skipping deploy" && exit 0
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-      - run: npm ci
-      - run: npm run zip
-      - name: Upload to Chrome Web Store
-        uses: mnao305/chrome-extension-upload@v5.0.0
-        with:
-          file-path: .output/*.zip
-          extension-id: ${{ secrets.CHROME_EXTENSION_ID }}
-          client-id: ${{ secrets.GOOGLE_CLIENT_ID }}
-          client-secret: ${{ secrets.GOOGLE_CLIENT_SECRET }}
-          refresh-token: ${{ secrets.GOOGLE_REFRESH_TOKEN }}
+          echo "old=$OLD new=$NEW"
+          if [ "$OLD" != "$NEW" ]; then echo "bumped=true" >> $GITHUB_OUTPUT; else echo "bumped=false" >> $GITHUB_OUTPUT; fi
+      - name: Build & zip
+        if: steps.version_check.outputs.bumped == 'true'
+        run: |
+          npm ci
+          npm run zip
+      - name: Deploy via service account
+        if: steps.version_check.outputs.bumped == 'true'
+        env:
+          SERVICE_ACCOUNT_KEY: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }}
+          EXTENSION_ID: ${{ secrets.CHROME_EXTENSION_ID }}
+        run: |
+          pip install google-auth google-auth-httplib2 --quiet
+          echo "$SERVICE_ACCOUNT_KEY" > /tmp/sa-key.json
+          ZIP=$(ls .output/*.zip | head -1)
+          python3 - <<'PYEOF'
+          import json, sys, urllib.request
+          from pathlib import Path
+          from google.oauth2 import service_account
+          from google.auth.transport.requests import Request
+          import os
+
+          KEY = json.loads(os.environ["SERVICE_ACCOUNT_KEY"])
+          APP_ID = os.environ["EXTENSION_ID"]
+          ZIP = Path(os.popen("ls .output/*.zip | head -1").read().strip())
+
+          creds = service_account.Credentials.from_service_account_info(
+              KEY, scopes=["https://www.googleapis.com/auth/chromewebstore"]
+          )
+          creds.refresh(Request())
+          token = creds.token
+
+          # Upload
+          url = f"https://www.googleapis.com/upload/chromewebstore/v1.1/items/{APP_ID}"
+          req = urllib.request.Request(url, data=ZIP.read_bytes(), method="PUT",
+              headers={"Authorization": f"Bearer {token}", "x-goog-api-version": "2"})
+          with urllib.request.urlopen(req) as r:
+              result = json.loads(r.read())
+          print("Upload:", result.get("uploadState"))
+
+          # Publish
+          pub_url = f"https://www.googleapis.com/chromewebstore/v1.1/items/{APP_ID}/publish"
+          req2 = urllib.request.Request(pub_url, data=b"{}", method="POST",
+              headers={"Authorization": f"Bearer {token}", "x-goog-api-version": "2",
+                       "Content-Type": "application/json"})
+          with urllib.request.urlopen(req2) as r:
+              pub = json.loads(r.read())
+          print("Publish:", pub.get("status"))
+          PYEOF
