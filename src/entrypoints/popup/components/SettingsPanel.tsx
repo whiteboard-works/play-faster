@@ -1,5 +1,6 @@
 import type { KbSettings } from "../../../shared/types"
 import { ShortcutRecorder } from "./ShortcutRecorder"
+import { SingleKeyRecorder } from "./SingleKeyRecorder"
 import { StepRow } from "./StepRow"
 import styles from "./SettingsPanel.module.css"
 
@@ -20,6 +21,24 @@ export function SettingsPanel({ settings, onSettingsChange }: Props) {
         <ShortcutRecorder
           shortcut={settings.shortcut}
           onChange={(sc) => update({ shortcut: sc })}
+        />
+      </div>
+
+      <p class={styles.speedsHeader}>Quick keys</p>
+
+      <div class={styles.shortcutRow}>
+        <span class={styles.settingLabel}>Speed Up</span>
+        <SingleKeyRecorder
+          value={settings.speedUpKey}
+          onChange={(key) => update({ speedUpKey: key })}
+        />
+      </div>
+
+      <div class={styles.shortcutRow}>
+        <span class={styles.settingLabel}>Speed Down</span>
+        <SingleKeyRecorder
+          value={settings.speedDownKey}
+          onChange={(key) => update({ speedDownKey: key })}
         />
       </div>
 

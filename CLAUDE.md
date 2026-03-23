@@ -137,3 +137,18 @@ Platform-specific bypass strategies live in `src/platforms/adapters/`. Each adap
 - `realMax` — actual ceiling to enforce
 
 To add a new platform, create a file in `adapters/` and add it to `registry.ts`.
+
+## Current Status
+- Version: 3.0.0
+- Repo: whiteboard-works/play-faster
+- Live on Chrome Web Store, CI passing
+- Pending: Store listing refresh
+
+## Common Pitfalls
+- Spoofing MUST run in MAIN world via inject.ts — not in isolated content script
+- Do not add inject.ts to manifest manually — WXT handles it as an unlisted script
+- New platform adapters: add to adapters/ directory AND register in registry.ts
+
+## When to Ask vs Proceed
+Proceed: New platform adapters, UI improvements, bug fixes
+Ask: Changing spoofing mechanism, new manifest permissions

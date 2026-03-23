@@ -1,0 +1,19 @@
+.keyInput {
+  width: 64px;
+  height: 42px;
+  background: var(--blue);
+  border: none;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+}
+
+.recording {
+  background: #000000;
+  color: #ffffff;
+  border: 2px solid #ffffff;
+}
