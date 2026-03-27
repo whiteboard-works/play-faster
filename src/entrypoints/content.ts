@@ -18,7 +18,10 @@ export default defineContentScript({
     })
 
     chrome.storage.onChanged.addListener((changes) => {
-      if (changes.playbackRate) currentRate = changes.playbackRate.newValue as number
+      if (changes.playbackRate) {
+        currentRate = changes.playbackRate.newValue as number
+        applyRateToAll()
+      }
       if (changes.kbSettings) {
         kbSettings = {
           ...DEFAULT_KB_SETTINGS,
@@ -330,6 +333,30 @@ export default defineContentScript({
       const altOk = sc.alt ? e.altKey : !e.altKey
       return ctrlOk && shiftOk && altOk && e.key === sc.key
     }
+
+    // Quick keys — single keypress speed up/down (always active, no overlay needed)
+    document.addEventListener(
+      "keydown",
+      (e) => {
+        const tag = (e.target as HTMLElement).tagName
+        if (
+          tag === "INPUT" ||
+          tag === "SELECT" ||
+          tag === "TEXTAREA" ||
+          (e.target as HTMLElement).isContentEditable
+        )
+          return
+        if (e.ctrlKey || e.metaKey || e.altKey || e.shiftKey) return
+        if (kbSettings.speedUpKey && e.key === kbSettings.speedUpKey) {
+          e.preventDefault()
+          applyRate(currentRate + kbSettings.smallStep)
+        } else if (kbSettings.speedDownKey && e.key === kbSettings.speedDownKey) {
+          e.preventDefault()
+          applyRate(currentRate - kbSettings.smallStep)
+        }
+      },
+      true
+    )
 
     document.addEventListener(
       "keydown",

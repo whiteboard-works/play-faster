@@ -7,6 +7,8 @@ export interface Shortcut {
 
 export interface KbSettings {
   shortcut: Shortcut | null
+  speedUpKey: string | null
+  speedDownKey: string | null
   smallStep: number
   largeStep: number
   minSpeed: number
